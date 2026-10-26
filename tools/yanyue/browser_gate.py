@@ -70,7 +70,7 @@ class BrowserGate:
         if 300 <= status < 400:
             raise Pause("http_redirect_requires_review")
         check_status(status, headers)
-        if headers.get("content-type", "").split(";", 1)[0].lower() not in {"text/html", "application/xhtml+xml"}:
+        if headers.get("content-type", "").split(";", 1)[0].strip().lower() not in {"text/html", "application/xhtml+xml"}:
             raise Pause("unexpected_document_mime")
         # The stream supplies chunks rather than one unbounded response.body().
         # Unsupported compression is refused at headers, before allocation.

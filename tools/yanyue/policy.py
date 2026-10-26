@@ -82,15 +82,109 @@ def check_status(status: int, headers: dict[str, str]) -> None:
         raise PolicyError(f"Unexpected HTTP status {status}; no automatic retry")
 
 
+def _visible_node(node) -> bool:
+    """Only use displayed structural content, not hidden login/template stubs."""
+    while node is not None:
+        if node.tag in {"script", "style", "template", "noscript", "iframe", "object"}:
+            return False
+        if "hidden" in node.attrs or node.attrs.get("aria-hidden", "").lower() == "true":
+            return False
+        if re.search(r"display\s*:\s*none|visibility\s*:\s*hidden", node.attrs.get("style", ""), re.I):
+            return False
+        node = node.parent
+    return True
+
+
+def _visible_text(node) -> str:
+    from .dom import Node
+    if not _visible_node(node):
+        return ""
+    return " ".join(child if isinstance(child, str) else _visible_text(child) for child in node.children)
+
+
+def _public_catalog_content(root) -> bool:
+    """Recognize observed populated public DOM, never merely an id/return URL."""
+    from .dom import Node
+    def visible(nodes):
+        return [node for node in nodes if _visible_node(node)]
+    def first(nodes):
+        return next(iter(nodes), None)
+    def source_link(node, kind):
+        if not _visible_text(node).strip():
+            return False
+        try:
+            url = canonical_url(node.attrs.get("href", ""))
+        except (PolicyError, ValueError):
+            return False
+        return bool(re.fullmatch(re.escape(ORIGIN) + "/" + kind + r"/[1-9][0-9]*", url))
+
+    brands = first(visible(root.walk(id="brands")))
+    if brands:
+        for group_id in ("mainland", "foreign", "HKMT", "history"):
+            for group in visible(brands.walk(id=group_id)):
+                listings = [group] if "brandsList" in group.attrs.get("class", "").split() else visible(group.walk(cls="brandsList"))
+                if any(source_link(a, "sort") for listing in listings for a in visible(listing.walk("a"))):
+                    return True
+
+    content = first(visible(root.walk(id="zine_content")))
+    if content is None:
+        return False
+    heading = first(visible(content.walk("h3")))
+    if heading is None or not _visible_text(heading).strip():
+        return False
+    basic = first(visible(content.walk(id="basicinfo")))
+    name = first(visible(heading.walk("span", cls="d-block")))
+    if basic and name and _visible_text(name).strip():
+        labels = set()
+        for title in visible(basic.walk(cls="info_title")):
+            siblings = [n for n in title.parent.children if isinstance(n, Node)]
+            index = siblings.index(title)
+            if index + 1 < len(siblings):
+                value = siblings[index + 1]
+                if "info_content" in value.attrs.get("class", "").split() and _visible_text(value).strip():
+                    labels.add(title.text.rstrip(":： "))
+        if {"品牌", "类型"}.issubset(labels):
+            return True
+
+    listing = first(visible(content.walk(id="prowrap")))
+    if listing:
+        for row in listing.children:
+            if not isinstance(row, Node) or not _visible_node(row) or "table" not in row.attrs.get("class", "").split():
+                continue
+            if any(source_link(a, "product") for cell in visible(row.walk(cls="name2")) for a in visible(cell.walk("a"))):
+                return True
+        # A source-reported empty brand is not a login wall either.
+        if any(re.search(r"共\s*0\s*条记录", _visible_text(nav)) for nav in visible(content.walk("nav", cls="pagenav_mainarea"))):
+            return True
+
+    # Classification only: this does not authorize gallery URLs, assets, XHRs,
+    # or scripts. The phase-one route/transport allowlists stay unchanged.
+    gallery = first(visible(content.walk(id="typepicwrap")))
+    if gallery and {"imgThumbList", "galleryThumbList"}.issubset(gallery.attrs.get("class", "").split()):
+        identity = any(source_link(a, "product") for a in visible(heading.walk("a")))
+        versions = any(source_link(a, "product") for title in visible(gallery.walk(cls="vertitlearea")) for a in visible(title.walk("a")))
+        cards = [a for item in visible(gallery.walk(cls="item")) for a in visible(item.walk("a")) if "data-lightbox" in a.attrs]
+        populated = any(image.attrs.get("data-original", "").startswith("https://res.yanyue.cn/") for a in cards for image in visible(a.walk("img")))
+        if identity and versions and populated:
+            return True
+    return False
+
+
 def classify_document(html: str) -> str:
-    """Only classify obvious interstitials, never solve them."""
-    text = re.sub(r"<[^>]+>", " ", html).lower()
+    """Classify displayed DOM without evaluating source JavaScript or solving gates."""
+    from .dom import Tree
+    root = Tree(html).root
+    text = re.sub(r"\s+", " ", _visible_text(root)).lower()
+    # An actually displayed challenge always wins, even if a catalog shell exists.
     if any(s in text for s in ("captcha", "verify you are human", "access denied", "安全验证", "人机验证", "验证码")):
         return "challenge"
-    # Login links are normal page furniture; only a login-form-only document is a boundary.
-    if re.search(r'<input\b[^>]*type=[\"\']?password', html, re.I) and not re.search(r'id=[\"\']basicinfo[\"\']', html, re.I):
+    public_content = _public_catalog_content(root)
+    if any(n.attrs.get("type", "").lower() == "password" for n in root.walk("input")) and not public_content:
         return "login"
-    if len(html) < 12000 and any(s in text for s in ("enable javascript", "启用javascript", "启用 javascript", "javascript is required", "正在加载")):
+    if not public_content and len(html) < 12000 and any(s in text for s in (
+        "enable javascript", "启用javascript", "启用 javascript", "javascript is required", "正在加载",
+        "请打开浏览器的javascript", "内容加载中",
+    )):
         return "loader"
     return "content"
 

@@ -1,5 +1,9 @@
 # 烟悦网事实资料采集工具（先资料，后界面）
 
+> **当前来源访问仍暂停。** 已核验的一期受限 CI 探测返回 `source_http_403`：2 次请求、73 字节响应体、0 个成功解析页面/产品、0 张图片。不是全量资料或完整小程序。此次仅提交离线兼容性修复；它们不是 403 成因证明，也不构成恢复访问授权。不要运行来源采集、`resume-source`、切换环境/浏览器身份或重用会话来重试。下一步需要站方提供的合法导出或明确允许的入口。
+
+兼容性补丁范围及离线测试见根目录 `COMPATIBILITY.md`。
+
 当前版本是**已观察目录链接的、有预算、可暂停的采集器**，不是已完成全站数据。代码不枚举连续 ID，不读取论坛、账户、评论、购物渠道或价格排行。来源站资料由网友提供，不标注为厂家认证。
 
 ## 已实现与尚未实现
@@ -7,7 +11,7 @@
 - 已实现：`/tobacco` 品牌分组、实际品牌列表和分页、`/product/{id}` 基本信息；品牌重复分组保留为集合。数值图保留证据 URL，值为 `null`，不按文件名、alt 文本或相似产品猜数字。
 - 已实现：官方 Playwright 自建临时 Chromium 上下文、普通页面 JavaScript 加载、单工作者、全局至少 5 秒间隔、请求/页数/接收字节/墙钟时间预算、SQLite 断点与最后成功记录、URL/内容哈希缓存、严格 JSON 检查点。
 - 已实现：图片域名/路径白名单、每图 5 MiB 上限、MIME/实际格式/完整解码/像素数检查；图片原样保存在本地待审目录，不去水印。
-- **未声称完成**：真实 Playwright 集成或网络采集验证（需单独的受限试跑）、全站产品计数、全部详情页、数值图人工核验导入、原文内容区/图片集 DOM 解析、跨 Actions 运行的图片二进制持久化、资料发布或微信平台审核。
+- **未声称完成**：成功的实际采集验证（已执行的受限探测被源站 403 拒绝）、全站产品计数、全部详情页、数值图人工核验导入、原文内容区/图片集 DOM 解析、跨 Actions 运行的图片二进制持久化、资料发布或微信平台审核。
 
 用户现已明确声明拥有相关第三方图片及原文的完整授权。授权边界与代码许可证分开记录；不是独立核验每位作者的证据。`original_text`/`gallery_status` 目前明确为待范围核查、未采集，不填假数据，也不把整页脚本、隐藏会话参数或无关帖子当原文入库。
 
@@ -22,7 +26,7 @@ PYTHONPATH=tools python -m yanyue.cli crawl --state-dir data/runtime
 
 最后一条只显示计划；不带 `--execute` 永远不发起来源请求。依赖版本为开发执行器已安装且测试过的固定版本，不代表声称“最新版本”。
 
-## 经操作员确认后的微型试跑
+## 未来重新获准访问后的微型试跑示例（当前不得运行）
 
 ```sh
 python -m pip install -r tools/requirements.txt
@@ -35,7 +39,7 @@ PYTHONPATH=tools python -m yanyue.cli status --state-dir data/runtime
 
 `max-requests` 包含 robots、初始文档、站点自己发起的加载导航、规范页重新进入、图片 robots 和图片；已阻止的子资源没有发出，不计请求。5 次请求可能只足够解析一页；不能拿 `max-pages` 当成功页数。普通预算到达为“部分完成”，来源暂停/中断退出码为 2，不能把 Actions 状态等同于资料收集完成。
 
-首次仅目录试跑。已观察研究索引可离线导入：
+现有 403 队列保持暂停；下面的研究索引导入只处理本地文件，不恢复来源访问：
 
 ```sh
 PYTHONPATH=tools python -m yanyue.cli import-observed-index \
@@ -46,7 +50,7 @@ PYTHONPATH=tools python -m yanyue.cli import-observed-index \
 
 ## 停止和访问规则
 
-- 只使用采集器新建的临时 Chromium；不连接用户或平台管理的浏览器，不读取/导出 cookie，不导入浏览器档案，不导出网络头或 HAR，不轮换身份/代理，不绕过登录、验证码、403 或 429。
+- 只使用采集器新建的临时 Playwright Chromium（当前实现为 bundled chromium-headless-shell，不是已验证的系统 Google Chrome 或所有 Chrome 模式）；不连接用户或平台管理的浏览器，不读取/导出 cookie，不导入浏览器档案，不导出网络头或 HAR，不轮换身份/代理，不绕过登录、验证码、403 或 429。
 - 浏览器自己执行站点的普通 JavaScript 加载。瞬态 `loading` 查询只留在当前浏览器，工具不生成、不保存、不重放。返回真实内容后仅可正常重新访问原始规范 URL 一次；页面仍非规范或链接结构异常就暂停。
 - 官方 Chromium CDP `Fetch` 在请求发送前做范围/预算检查，在响应头阶段拒绝全部 HTTP 3xx、错误状态及压缩内容。`IO.read` 每次最多 64 KiB，有单文档 2 MiB 与总字节上限；不调用无界 `response.body()`。
 - `Network.setAcceptedEncodings([])` 仅请求无压缩传输以限制解压风险；不改变 User-Agent、cookie 或身份。必需 CDP 功能不可用时停止，不降级到无界获取。官方协议参考：[Fetch](https://raw.githubusercontent.com/ChromeDevTools/devtools-protocol/master/pdl/domains/Fetch.pdl)、[IO](https://raw.githubusercontent.com/ChromeDevTools/devtools-protocol/master/pdl/domains/IO.pdl)。该编码设置也在固定 Playwright 1.62.0 自带的 `protocol.d.ts` 中核对过。

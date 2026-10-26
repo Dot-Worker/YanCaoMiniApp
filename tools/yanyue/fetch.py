@@ -200,7 +200,21 @@ class BrowserFetcher:
                 if self.gate.error:
                     raise self.gate.error
                 self.transport.budget.check_time()
-                html = self.page.content()
+                try:
+                    html = self.page.content()
+                except Exception as exc:
+                    if self.gate.error:
+                        raise self.gate.error
+                    # Only this known DOM-snapshot transition is retryable. Do
+                    # not retry navigation, HTTP errors, closed pages or other
+                    # failures, and never persist the raw exception text.
+                    transition = "Unable to retrieve content because the page is navigating and changing the content."
+                    if transition not in str(exc):
+                        raise
+                    if time.monotonic() - started >= 20:
+                        raise Pause("normal_page_navigation_did_not_settle") from None
+                    self.page.wait_for_timeout(250)
+                    continue
                 if len(html.encode()) > MAX_DOCUMENT_BYTES:
                     raise BudgetExhausted("document_exceeds_byte_budget")
                 kind = classify_document(html)
