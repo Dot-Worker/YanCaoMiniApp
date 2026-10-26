@@ -1,0 +1,207 @@
+# Source-only CI runs automatically. Source-site access requires explicit manual
+# confirmation; the first pilot remains fixed at 5 requests with zero images.
+name: Data pipeline checks and bounded manual pilot
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      confirm_authorized:
+        description: 'I authorize this reviewed, bounded public-data pilot (not a full crawl)'
+        required: true
+        default: false
+        type: boolean
+      mode:
+        description: 'Fresh pilot or resume a verified public checkpoint'
+        required: true
+        default: pilot
+        type: choice
+        options: [pilot, resume]
+      resume_run_id:
+        description: 'Resume only: completed manual run ID from this repository'
+        default: ''
+        type: string
+      resume_attempt:
+        description: 'Resume only: attempt number printed in the artifact name'
+        default: '1'
+        type: string
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  offline-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Install pinned test dependencies without browser binaries
+        run: |
+          python -m pip install --disable-pip-version-check --index-url https://pypi.org/simple -r tools/requirements-test.txt
+      - name: Compile and run fixture-only unit tests
+        env:
+          PYTHONPATH: tools
+        run: |
+          python -m compileall -q tools
+          python -m unittest discover -s tools/tests -v
+
+  bounded-public-pilot:
+    needs: offline-tests
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      inputs.confirm_authorized == true &&
+      github.ref == 'refs/heads/main' &&
+      github.repository == 'Dot-Worker/YanCaoMiniApp'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+    concurrency:
+      group: yanyue-public-crawl
+      cancel-in-progress: false
+    env:
+      PYTHONPATH: tools
+      PYTHONUNBUFFERED: '1'
+      MODE: ${{ inputs.mode }}
+      RESUME_RUN_ID: ${{ inputs.resume_run_id }}
+      RESUME_ATTEMPT: ${{ inputs.resume_attempt }}
+    steps:
+      - name: Validate manual parameters without contacting the source
+        run: |
+          case "$MODE" in
+            pilot) test -z "$RESUME_RUN_ID" ;;
+            resume)
+              [[ "$RESUME_RUN_ID" =~ ^[1-9][0-9]{0,19}$ ]]
+              [[ "$RESUME_ATTEMPT" =~ ^[1-9][0-9]{0,5}$ ]]
+              test "$RESUME_RUN_ID" != "$GITHUB_RUN_ID"
+              ;;
+            *) exit 2 ;;
+          esac
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Install only the reviewed pinned official dependencies
+        timeout-minutes: 5
+        run: |
+          python -m pip install --disable-pip-version-check --index-url https://pypi.org/simple -r tools/requirements.txt
+          python -m playwright install --with-deps chromium
+      - name: Verify resume provenance and bounded artifact size
+        if: inputs.mode == 'resume'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RESUME_RUN_ID/attempts/$RESUME_ATTEMPT" > "$RUNNER_TEMP/resume-run.json"
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RESUME_RUN_ID/artifacts?per_page=100" > "$RUNNER_TEMP/resume-artifacts.json"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP'])
+          run = json.loads((root / 'resume-run.json').read_text())
+          repo = os.environ['GITHUB_REPOSITORY']
+          expected_path = '.github/workflows/data-pipeline.yml'
+          if not (
+              run['event'] == 'workflow_dispatch'
+              and run['status'] == 'completed'
+              and run['head_branch'] == 'main'
+              and run['head_sha'] == os.environ['GITHUB_SHA']
+              and run['path'] == expected_path
+              and run['head_repository']['full_name'] == repo
+              and str(run['run_attempt']) == os.environ['RESUME_ATTEMPT']
+          ):
+              raise SystemExit('Refusing untrusted or incompatible resume run')
+          name = 'yancao-public-checkpoint-' + os.environ['RESUME_RUN_ID'] + '-' + os.environ['RESUME_ATTEMPT']
+          entries = json.loads((root / 'resume-artifacts.json').read_text())['artifacts']
+          matches = [a for a in entries if a['name'] == name and not a['expired']]
+          if len(matches) != 1 or not 0 < matches[0]['size_in_bytes'] <= 25 * 1024 * 1024:
+              raise SystemExit('Resume artifact missing, expired, ambiguous, or over 25 MiB')
+          PY
+      - name: Download only the verified checkpoint
+        if: inputs.mode == 'resume'
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: yancao-public-checkpoint-${{ inputs.resume_run_id }}-${{ inputs.resume_attempt }}
+          path: ${{ runner.temp }}/resume-checkpoint
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ inputs.resume_run_id }}
+          digest-mismatch: error
+      - name: Validate and restore checkpoint offline
+        if: inputs.mode == 'resume'
+        run: |
+          # JSON-only offline restore: never execute files from the artifact.
+          python -m yanyue.cli checkpoint restore \
+            --input "$RUNNER_TEMP/resume-checkpoint" --state-dir data/runtime
+      - name: Run one bounded pilot slice, never a full crawl
+        id: crawl
+        continue-on-error: true
+        run: |
+          # The audited CLI must enforce >=5-second spacing, count ALL source
+          # requests (robots/retries/redirects/assets included), and persist on TERM.
+          # Limits are deliberately not user-adjustable in this first pilot.
+          # Defense in depth: unexpected transport traces never enter public logs.
+          # Do not write a raw log file; use the validated checkpoint to diagnose.
+          set +e
+          timeout --signal=TERM --kill-after=30s 240s \
+            python -m yanyue.cli crawl --execute --state-dir data/runtime \
+              --max-pages 5 --max-requests 5 --max-images 0 \
+              --max-bytes 10485760 --max-seconds 180 --interval 5 \
+              >/dev/null 2>&1
+          status=$?
+          set -e
+          printf 'Bounded source slice exit status: %d\n' "$status"
+          exit "$status"
+      - name: Export an allowlisted, sanitized public checkpoint offline
+        id: checkpoint
+        if: always() && steps.crawl.outcome != 'skipped'
+        timeout-minutes: 2
+        run: |
+          # Atomic export validates public schema, canonical URLs and bounds;
+          # excludes cookies, tokens, raw HTML, traces and image binaries.
+          python -m yanyue.cli checkpoint export \
+            --state-dir data/runtime --output "$RUNNER_TEMP/public-checkpoint"
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP']) / 'public-checkpoint'
+          entries = list(root.rglob('*'))
+          if not root.is_dir() or root.is_symlink() or any(p.is_symlink() for p in entries):
+              raise SystemExit('Public export must be a real directory without symlinks')
+          if {p.relative_to(root).as_posix() for p in entries} != {'checkpoint.json'}:
+              raise SystemExit('The first pilot may publish only checkpoint.json')
+          files = [p for p in entries if p.is_file()]
+          if not 0 < len(files) <= 1000 or sum(p.stat().st_size for p in files) > 20 * 1024 * 1024:
+              raise SystemExit('Public export exceeds 1,000 files or 20 MiB expanded size')
+          if any(not p.is_file() and not p.is_dir() for p in entries):
+              raise SystemExit('Public export contains an unsupported filesystem entry')
+          PY
+      - name: Retain a resumable public artifact even after a failed crawl
+        if: always() && steps.checkpoint.outcome == 'success'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: yancao-public-checkpoint-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/public-checkpoint/checkpoint.json
+          if-no-files-found: error
+          retention-days: 30
+          include-hidden-files: false
+          overwrite: false
+          compression-level: 6
+      - name: Preserve crawler failure status
+        if: always() && steps.crawl.outcome == 'failure'
+        run: |
+          echo 'Bounded crawl failed or was interrupted; review the checkpoint/coverage. This is not a complete collection.'
+          exit 1
