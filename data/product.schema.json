@@ -1,0 +1,1570 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^yanyue:[1-9][0-9]*$"
+    },
+    "source_id": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,12}$"
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 100
+      },
+      "maxItems": 20
+    },
+    "category": {
+      "const": "traditional_tobacco"
+    },
+    "production_status": {
+      "const": "unknown"
+    },
+    "fields": {
+      "type": "object",
+      "properties": {
+        "brand_name": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 256
+            },
+            "source_label": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "raw_value": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "raw_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expected_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "evidence_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "maxItems": 8
+            },
+            "source_url": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "observed_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+            },
+            "verification_status": {
+              "enum": [
+                "source_reported",
+                "needs_review",
+                "missing",
+                "manually_read_image"
+              ]
+            },
+            "extraction_method": {
+              "enum": [
+                "image_not_read",
+                "not_available",
+                "source_text",
+                "manual_image_review"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "source_label",
+            "raw_value",
+            "raw_unit",
+            "expected_unit",
+            "evidence_urls",
+            "source_url",
+            "observed_at",
+            "verification_status",
+            "extraction_method"
+          ],
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 256
+            },
+            "source_label": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "raw_value": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "raw_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expected_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "evidence_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "maxItems": 8
+            },
+            "source_url": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "observed_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+            },
+            "verification_status": {
+              "enum": [
+                "source_reported",
+                "needs_review",
+                "missing",
+                "manually_read_image"
+              ]
+            },
+            "extraction_method": {
+              "enum": [
+                "image_not_read",
+                "not_available",
+                "source_text",
+                "manual_image_review"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "source_label",
+            "raw_value",
+            "raw_unit",
+            "expected_unit",
+            "evidence_urls",
+            "source_url",
+            "observed_at",
+            "verification_status",
+            "extraction_method"
+          ],
+          "additionalProperties": false
+        },
+        "package_form": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 256
+            },
+            "source_label": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "raw_value": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "raw_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expected_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "evidence_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "maxItems": 8
+            },
+            "source_url": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "observed_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+            },
+            "verification_status": {
+              "enum": [
+                "source_reported",
+                "needs_review",
+                "missing",
+                "manually_read_image"
+              ]
+            },
+            "extraction_method": {
+              "enum": [
+                "image_not_read",
+                "not_available",
+                "source_text",
+                "manual_image_review"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "source_label",
+            "raw_value",
+            "raw_unit",
+            "expected_unit",
+            "evidence_urls",
+            "source_url",
+            "observed_at",
+            "verification_status",
+            "extraction_method"
+          ],
+          "additionalProperties": false
+        },
+        "primary_color": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 256
+            },
+            "source_label": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "raw_value": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "raw_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expected_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "evidence_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "maxItems": 8
+            },
+            "source_url": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "observed_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+            },
+            "verification_status": {
+              "enum": [
+                "source_reported",
+                "needs_review",
+                "missing",
+                "manually_read_image"
+              ]
+            },
+            "extraction_method": {
+              "enum": [
+                "image_not_read",
+                "not_available",
+                "source_text",
+                "manual_image_review"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "source_label",
+            "raw_value",
+            "raw_unit",
+            "expected_unit",
+            "evidence_urls",
+            "source_url",
+            "observed_at",
+            "verification_status",
+            "extraction_method"
+          ],
+          "additionalProperties": false
+        },
+        "secondary_color": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 256
+            },
+            "source_label": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "raw_value": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "raw_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expected_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "evidence_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "maxItems": 8
+            },
+            "source_url": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "observed_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+            },
+            "verification_status": {
+              "enum": [
+                "source_reported",
+                "needs_review",
+                "missing",
+                "manually_read_image"
+              ]
+            },
+            "extraction_method": {
+              "enum": [
+                "image_not_read",
+                "not_available",
+                "source_text",
+                "manual_image_review"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "source_label",
+            "raw_value",
+            "raw_unit",
+            "expected_unit",
+            "evidence_urls",
+            "source_url",
+            "observed_at",
+            "verification_status",
+            "extraction_method"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "brand_name",
+        "type",
+        "package_form",
+        "primary_color",
+        "secondary_color"
+      ],
+      "additionalProperties": false
+    },
+    "measurements": {
+      "type": "object",
+      "properties": {
+        "tar_mg": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100000
+            },
+            "source_label": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "raw_value": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "raw_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expected_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "evidence_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "maxItems": 8
+            },
+            "source_url": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "observed_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+            },
+            "verification_status": {
+              "enum": [
+                "source_reported",
+                "needs_review",
+                "missing",
+                "manually_read_image"
+              ]
+            },
+            "extraction_method": {
+              "enum": [
+                "image_not_read",
+                "not_available",
+                "source_text",
+                "manual_image_review"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "source_label",
+            "raw_value",
+            "raw_unit",
+            "expected_unit",
+            "evidence_urls",
+            "source_url",
+            "observed_at",
+            "verification_status",
+            "extraction_method"
+          ],
+          "additionalProperties": false
+        },
+        "nicotine_mg": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100000
+            },
+            "source_label": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "raw_value": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "raw_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expected_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "evidence_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "maxItems": 8
+            },
+            "source_url": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "observed_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+            },
+            "verification_status": {
+              "enum": [
+                "source_reported",
+                "needs_review",
+                "missing",
+                "manually_read_image"
+              ]
+            },
+            "extraction_method": {
+              "enum": [
+                "image_not_read",
+                "not_available",
+                "source_text",
+                "manual_image_review"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "source_label",
+            "raw_value",
+            "raw_unit",
+            "expected_unit",
+            "evidence_urls",
+            "source_url",
+            "observed_at",
+            "verification_status",
+            "extraction_method"
+          ],
+          "additionalProperties": false
+        },
+        "carbon_monoxide_mg": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100000
+            },
+            "source_label": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "raw_value": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "raw_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expected_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "evidence_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "maxItems": 8
+            },
+            "source_url": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "observed_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+            },
+            "verification_status": {
+              "enum": [
+                "source_reported",
+                "needs_review",
+                "missing",
+                "manually_read_image"
+              ]
+            },
+            "extraction_method": {
+              "enum": [
+                "image_not_read",
+                "not_available",
+                "source_text",
+                "manual_image_review"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "source_label",
+            "raw_value",
+            "raw_unit",
+            "expected_unit",
+            "evidence_urls",
+            "source_url",
+            "observed_at",
+            "verification_status",
+            "extraction_method"
+          ],
+          "additionalProperties": false
+        },
+        "length_mm": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100000
+            },
+            "source_label": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "raw_value": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "raw_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expected_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "evidence_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "maxItems": 8
+            },
+            "source_url": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "observed_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+            },
+            "verification_status": {
+              "enum": [
+                "source_reported",
+                "needs_review",
+                "missing",
+                "manually_read_image"
+              ]
+            },
+            "extraction_method": {
+              "enum": [
+                "image_not_read",
+                "not_available",
+                "source_text",
+                "manual_image_review"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "source_label",
+            "raw_value",
+            "raw_unit",
+            "expected_unit",
+            "evidence_urls",
+            "source_url",
+            "observed_at",
+            "verification_status",
+            "extraction_method"
+          ],
+          "additionalProperties": false
+        },
+        "filter_length_mm": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100000
+            },
+            "source_label": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "raw_value": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "raw_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expected_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "evidence_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "maxItems": 8
+            },
+            "source_url": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "observed_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+            },
+            "verification_status": {
+              "enum": [
+                "source_reported",
+                "needs_review",
+                "missing",
+                "manually_read_image"
+              ]
+            },
+            "extraction_method": {
+              "enum": [
+                "image_not_read",
+                "not_available",
+                "source_text",
+                "manual_image_review"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "source_label",
+            "raw_value",
+            "raw_unit",
+            "expected_unit",
+            "evidence_urls",
+            "source_url",
+            "observed_at",
+            "verification_status",
+            "extraction_method"
+          ],
+          "additionalProperties": false
+        },
+        "circumference_mm": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100000
+            },
+            "source_label": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "raw_value": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "raw_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expected_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "evidence_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "maxItems": 8
+            },
+            "source_url": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "observed_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+            },
+            "verification_status": {
+              "enum": [
+                "source_reported",
+                "needs_review",
+                "missing",
+                "manually_read_image"
+              ]
+            },
+            "extraction_method": {
+              "enum": [
+                "image_not_read",
+                "not_available",
+                "source_text",
+                "manual_image_review"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "source_label",
+            "raw_value",
+            "raw_unit",
+            "expected_unit",
+            "evidence_urls",
+            "source_url",
+            "observed_at",
+            "verification_status",
+            "extraction_method"
+          ],
+          "additionalProperties": false
+        },
+        "sticks_per_pack": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100000
+            },
+            "source_label": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "raw_value": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "raw_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expected_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "evidence_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "maxItems": 8
+            },
+            "source_url": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "observed_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+            },
+            "verification_status": {
+              "enum": [
+                "source_reported",
+                "needs_review",
+                "missing",
+                "manually_read_image"
+              ]
+            },
+            "extraction_method": {
+              "enum": [
+                "image_not_read",
+                "not_available",
+                "source_text",
+                "manual_image_review"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "source_label",
+            "raw_value",
+            "raw_unit",
+            "expected_unit",
+            "evidence_urls",
+            "source_url",
+            "observed_at",
+            "verification_status",
+            "extraction_method"
+          ],
+          "additionalProperties": false
+        },
+        "packs_per_carton": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100000
+            },
+            "source_label": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "raw_value": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "raw_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expected_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "evidence_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "maxItems": 8
+            },
+            "source_url": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "observed_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+            },
+            "verification_status": {
+              "enum": [
+                "source_reported",
+                "needs_review",
+                "missing",
+                "manually_read_image"
+              ]
+            },
+            "extraction_method": {
+              "enum": [
+                "image_not_read",
+                "not_available",
+                "source_text",
+                "manual_image_review"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "source_label",
+            "raw_value",
+            "raw_unit",
+            "expected_unit",
+            "evidence_urls",
+            "source_url",
+            "observed_at",
+            "verification_status",
+            "extraction_method"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "tar_mg",
+        "nicotine_mg",
+        "carbon_monoxide_mg",
+        "length_mm",
+        "filter_length_mm",
+        "circumference_mm",
+        "sticks_per_pack",
+        "packs_per_carton"
+      ],
+      "additionalProperties": false
+    },
+    "barcodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9]{8,14}$"
+          },
+          "source_label": {
+            "type": "string",
+            "maxLength": 50
+          },
+          "raw_value": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 256
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "raw_unit": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 20
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expected_unit": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 20
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evidence_urls": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "maxItems": 8
+          },
+          "source_url": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "observed_at": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+          },
+          "verification_status": {
+            "enum": [
+              "source_reported",
+              "needs_review",
+              "missing",
+              "manually_read_image"
+            ]
+          },
+          "extraction_method": {
+            "enum": [
+              "image_not_read",
+              "not_available",
+              "source_text",
+              "manual_image_review"
+            ]
+          },
+          "kind": {
+            "enum": [
+              "pack",
+              "carton"
+            ]
+          }
+        },
+        "required": [
+          "value",
+          "source_label",
+          "raw_value",
+          "raw_unit",
+          "expected_unit",
+          "evidence_urls",
+          "source_url",
+          "observed_at",
+          "verification_status",
+          "extraction_method",
+          "kind"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 2
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source_asset_url": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "source_page_url": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "purpose": {
+            "enum": [
+              "package_identification",
+              "fact_evidence"
+            ]
+          },
+          "author_credit": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "rights_status": {
+            "enum": [
+              "user_asserted_authorized",
+              "user_asserted_full_authorization"
+            ]
+          },
+          "rights_note": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "code_license_applies": {
+            "const": false
+          },
+          "allow_derivatives": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "publication_status": {
+            "enum": [
+              "quarantined_pending_review"
+            ]
+          }
+        },
+        "required": [
+          "source_asset_url",
+          "source_page_url",
+          "purpose",
+          "author_credit",
+          "rights_status",
+          "rights_note",
+          "code_license_applies",
+          "allow_derivatives",
+          "publication_status"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 1
+    },
+    "source_url": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "observed_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+    },
+    "source_access_method": {
+      "enum": [
+        "offline_fixture",
+        "normal_browser_dom"
+      ]
+    },
+    "verification_status": {
+      "const": "source_reported"
+    },
+    "manufacturer_verified": {
+      "const": false
+    },
+    "source_contributor_type": {
+      "const": "user_contributed"
+    },
+    "health_note": {
+      "type": "string",
+      "maxLength": 256
+    },
+    "original_text": {
+      "anyOf": [
+        {
+          "type": "string",
+          "maxLength": 50000
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "original_text_status": {
+      "enum": [
+        "not_collected_pending_scoped_source_review"
+      ]
+    },
+    "gallery_status": {
+      "enum": [
+        "not_collected_pending_scoped_source_review"
+      ]
+    },
+    "authorization": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "user_asserted_full_authorization"
+        },
+        "scope": {
+          "const": "relevant_third_party_images_and_original_encyclopedia_text"
+        },
+        "independently_verified": {
+          "const": false
+        },
+        "code_license_applies": {
+          "const": false
+        }
+      },
+      "required": [
+        "status",
+        "scope",
+        "independently_verified",
+        "code_license_applies"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "source_id",
+    "name",
+    "aliases",
+    "category",
+    "production_status",
+    "fields",
+    "measurements",
+    "barcodes",
+    "images",
+    "source_url",
+    "observed_at",
+    "source_access_method",
+    "verification_status",
+    "manufacturer_verified",
+    "source_contributor_type",
+    "health_note",
+    "original_text",
+    "original_text_status",
+    "gallery_status",
+    "authorization"
+  ],
+  "additionalProperties": false
+}

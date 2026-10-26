@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.venv/
+# Acquisition state and third-party material are PRIVATE review inputs, not code.
+data/runtime/
+data/exports/
+data/images/
+data/cache/
+playwright-report/
+test-results/
+*.har
+*.trace
+storage-state*.json
+.env
+.env.*

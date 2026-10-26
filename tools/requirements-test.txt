@@ -1,0 +1,3 @@
+# Versions observed in the development executor and used by offline validation.
+jsonschema==4.26.0
+Pillow==12.3.0
