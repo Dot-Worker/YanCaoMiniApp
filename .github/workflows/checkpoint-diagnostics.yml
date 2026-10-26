@@ -1,0 +1,67 @@
+# Read one already-produced artifact. This workflow has NO source-crawl step.
+name: Diagnose fixed public pilot checkpoint offline
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: yancao-fixed-checkpoint-diagnostics
+  cancel-in-progress: false
+
+jobs:
+  diagnose-existing-checkpoint:
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      github.ref == 'refs/heads/main' &&
+      github.repository == 'Dot-Worker/YanCaoMiniApp'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Read the original reviewed schema at its immutable source commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: 89af1edefdb855b17ba5ae3d438052fbdcf2402f
+          path: frozen-source
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Install pinned offline-validation dependencies without a browser
+        run: |
+          python -m pip install --disable-pip-version-check --index-url https://pypi.org/simple -r frozen-source/tools/requirements-test.txt
+      - name: Verify fixed original run and artifact provenance
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # GitHub metadata only. Never print the response or a token-bearing URL.
+          gh api repos/Dot-Worker/YanCaoMiniApp/actions/runs/40381732787/attempts/1 > "$RUNNER_TEMP/diagnostic-run.json" 2>/dev/null || { echo 'diagnostic_metadata_read_failed'; exit 2; }
+          gh api repos/Dot-Worker/YanCaoMiniApp/actions/artifacts/12679460903 > "$RUNNER_TEMP/diagnostic-artifact.json" 2>/dev/null || { echo 'diagnostic_metadata_read_failed'; exit 2; }
+          python .github/scripts/checkpoint_diagnostics.py provenance \
+            --run "$RUNNER_TEMP/diagnostic-run.json" --artifact "$RUNNER_TEMP/diagnostic-artifact.json"
+      - name: Download only the verified immutable public checkpoint
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          artifact-ids: '12679460903'
+          path: ${{ runner.temp }}/diagnostic-checkpoint
+          github-token: ${{ github.token }}
+          repository: Dot-Worker/YanCaoMiniApp
+          run-id: '40381732787'
+          digest-mismatch: error
+      - name: Validate offline and emit allowlisted scalar diagnosis only
+        env:
+          PYTHONPATH: frozen-source/tools
+        run: |
+          # No restore, crawl, browser, source request, pause override, or raw JSON.
+          # The new workflow SHA is NOT substituted for original source identity.
+          python .github/scripts/checkpoint_diagnostics.py summary --input "$RUNNER_TEMP/diagnostic-checkpoint"
