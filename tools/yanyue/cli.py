@@ -10,6 +10,7 @@ from .fetch import BrowserFetcher, Transport
 from .parser import GROUPS
 from .policy import Budget, BudgetExhausted, ORIGIN, Pause, PolicyError, RateLimiter, canonical_url, utcnow, walltime_deadline
 from .store import Store, atomic_json, dump_json
+from .snapshot_import import import_snapshot, browser_index_status
 
 
 def parser():
@@ -35,6 +36,14 @@ def parser():
     imp = sub.add_parser("import-observed-index", help="Import the reviewed source research index offline")
     imp.add_argument("--state-dir", default="data/runtime")
     imp.add_argument("--input", required=True)
+    snapshot = sub.add_parser("import-browser-snapshot", help="Import already-loaded, authorized field JSON offline; never resumes source jobs")
+    snapshot.add_argument("--state-dir", default="data/runtime")
+    snapshot.add_argument("--input", required=True)
+    for flag in ("--source-url", "--source-id", "--name", "--observed-at"):
+        snapshot.add_argument(flag)
+    index_status = sub.add_parser("browser-index-status", help="Compare observed single-brand index with stored details offline; no queue changes")
+    index_status.add_argument("--state-dir", default="data/runtime")
+    index_status.add_argument("--input", required=True)
     cp = sub.add_parser("checkpoint", help="Strict JSON-only export/restore; no browser state or images")
     cps = cp.add_subparsers(dest="checkpoint_command", required=True)
     for command, flag in (("export", "--output"), ("restore", "--input")):
@@ -82,6 +91,10 @@ def main(argv=None):
                     store.db.execute("UPDATE queue SET status='pending' WHERE status='failed'")
                     store.db.commit()
                 result = store.coverage()
+            elif args.command == "browser-index-status":
+                result = browser_index_status(store, args.input)
+            elif args.command == "import-browser-snapshot":
+                result = import_snapshot(store, args.input, source_url=args.source_url, source_id=args.source_id, name=args.name, observed_at=args.observed_at)
             elif args.command == "import-observed-index":
                 result = import_observed(store, args.input)
             else:

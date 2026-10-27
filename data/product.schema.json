@@ -95,7 +95,7 @@
             },
             "observed_at": {
               "type": "string",
-              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?\\+00:00$"
             },
             "verification_status": {
               "enum": [
@@ -189,7 +189,7 @@
             },
             "observed_at": {
               "type": "string",
-              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?\\+00:00$"
             },
             "verification_status": {
               "enum": [
@@ -283,7 +283,7 @@
             },
             "observed_at": {
               "type": "string",
-              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?\\+00:00$"
             },
             "verification_status": {
               "enum": [
@@ -377,7 +377,7 @@
             },
             "observed_at": {
               "type": "string",
-              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?\\+00:00$"
             },
             "verification_status": {
               "enum": [
@@ -471,7 +471,101 @@
             },
             "observed_at": {
               "type": "string",
-              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?\\+00:00$"
+            },
+            "verification_status": {
+              "enum": [
+                "source_reported",
+                "needs_review",
+                "missing",
+                "manually_read_image"
+              ]
+            },
+            "extraction_method": {
+              "enum": [
+                "image_not_read",
+                "not_available",
+                "source_text",
+                "manual_image_review"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "source_label",
+            "raw_value",
+            "raw_unit",
+            "expected_unit",
+            "evidence_urls",
+            "source_url",
+            "observed_at",
+            "verification_status",
+            "extraction_method"
+          ],
+          "additionalProperties": false
+        },
+        "cigarette_format": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 256
+            },
+            "source_label": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "raw_value": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 256
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "raw_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "expected_unit": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "evidence_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "maxItems": 8
+            },
+            "source_url": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "observed_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?\\+00:00$"
             },
             "verification_status": {
               "enum": [
@@ -579,7 +673,7 @@
             },
             "observed_at": {
               "type": "string",
-              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?\\+00:00$"
             },
             "verification_status": {
               "enum": [
@@ -674,7 +768,7 @@
             },
             "observed_at": {
               "type": "string",
-              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?\\+00:00$"
             },
             "verification_status": {
               "enum": [
@@ -769,7 +863,7 @@
             },
             "observed_at": {
               "type": "string",
-              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?\\+00:00$"
             },
             "verification_status": {
               "enum": [
@@ -864,7 +958,7 @@
             },
             "observed_at": {
               "type": "string",
-              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?\\+00:00$"
             },
             "verification_status": {
               "enum": [
@@ -959,7 +1053,7 @@
             },
             "observed_at": {
               "type": "string",
-              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?\\+00:00$"
             },
             "verification_status": {
               "enum": [
@@ -1054,7 +1148,7 @@
             },
             "observed_at": {
               "type": "string",
-              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?\\+00:00$"
             },
             "verification_status": {
               "enum": [
@@ -1149,7 +1243,7 @@
             },
             "observed_at": {
               "type": "string",
-              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?\\+00:00$"
             },
             "verification_status": {
               "enum": [
@@ -1244,7 +1338,7 @@
             },
             "observed_at": {
               "type": "string",
-              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?\\+00:00$"
             },
             "verification_status": {
               "enum": [
@@ -1353,7 +1447,7 @@
           },
           "observed_at": {
             "type": "string",
-            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?\\+00:00$"
           },
           "verification_status": {
             "enum": [
@@ -1475,12 +1569,13 @@
     },
     "observed_at": {
       "type": "string",
-      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{3})?\\+00:00$"
     },
     "source_access_method": {
       "enum": [
         "offline_fixture",
-        "normal_browser_dom"
+        "normal_browser_dom",
+        "imported_loaded_browser_field_snapshot"
       ]
     },
     "verification_status": {
@@ -1540,6 +1635,54 @@
         "code_license_applies"
       ],
       "additionalProperties": false
+    },
+    "snapshot_provenance": {
+      "type": "object",
+      "properties": {
+        "input_format": {
+          "enum": [
+            "loaded_browser_product_fields_v1",
+            "loaded_browser_product_envelope_v1"
+          ]
+        },
+        "input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_host": {
+          "const": "www.yanyue.cn"
+        },
+        "source_time_precision": {
+          "enum": [
+            "second",
+            "millisecond"
+          ]
+        },
+        "imported_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+00:00$"
+        },
+        "identity_metadata_basis": {
+          "const": "operator_attested_from_loaded_page"
+        },
+        "original_html_sha256": {
+          "type": "null"
+        },
+        "network_requests_during_import": {
+          "const": 0
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "input_format",
+        "input_sha256",
+        "source_host",
+        "source_time_precision",
+        "imported_at",
+        "identity_metadata_basis",
+        "original_html_sha256",
+        "network_requests_during_import"
+      ]
     }
   },
   "required": [
@@ -1566,5 +1709,28 @@
     "gallery_status",
     "authorization"
   ],
-  "additionalProperties": false
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "source_access_method": {
+            "const": "imported_loaded_browser_field_snapshot"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "snapshot_provenance"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "snapshot_provenance"
+          ]
+        }
+      }
+    }
+  ]
 }

@@ -1,0 +1,234 @@
+{
+  "observed_date": "2026-10-27",
+  "brand_id": 13,
+  "method": "current_cloud_browser_rendered_dom",
+  "scope": "single_brand_index_only",
+  "expected_records": 56,
+  "pages": 6,
+  "products": [
+    {
+      "name": "中华(金中支)",
+      "url": "https://www.yanyue.cn/product/3358"
+    },
+    {
+      "name": "中华(双中支)",
+      "url": "https://www.yanyue.cn/product/3363"
+    },
+    {
+      "name": "中华(金细支)",
+      "url": "https://www.yanyue.cn/product/4231"
+    },
+    {
+      "name": "中华(金双中)",
+      "url": "https://www.yanyue.cn/product/7286"
+    },
+    {
+      "name": "中华(细支5mg)",
+      "url": "https://www.yanyue.cn/product/7476"
+    },
+    {
+      "name": "中华(细支6mg)",
+      "url": "https://www.yanyue.cn/product/7020"
+    },
+    {
+      "name": "中华(硬)",
+      "url": "https://www.yanyue.cn/product/442"
+    },
+    {
+      "name": "中华(细支)",
+      "url": "https://www.yanyue.cn/product/4385"
+    },
+    {
+      "name": "中华(软)",
+      "url": "https://www.yanyue.cn/product/441"
+    },
+    {
+      "name": "中华(细支3mg)",
+      "url": "https://www.yanyue.cn/product/6402"
+    },
+    {
+      "name": "中华(全开式)",
+      "url": "https://www.yanyue.cn/product/439"
+    },
+    {
+      "name": "中华(大中华)",
+      "url": "https://www.yanyue.cn/product/2391"
+    },
+    {
+      "name": "中华(金短支)",
+      "url": "https://www.yanyue.cn/product/3610"
+    },
+    {
+      "name": "中华(软)建厂百年版",
+      "url": "https://www.yanyue.cn/product/6987"
+    },
+    {
+      "name": "中华(双中支5mg)专供出口",
+      "url": "https://www.yanyue.cn/product/6581"
+    },
+    {
+      "name": "中华(硬)建厂百年版",
+      "url": "https://www.yanyue.cn/product/6986"
+    },
+    {
+      "name": "中华(金短支)2025新年大吉",
+      "url": "https://www.yanyue.cn/product/6442"
+    },
+    {
+      "name": "中华(软)专供出口",
+      "url": "https://www.yanyue.cn/product/2702"
+    },
+    {
+      "name": "中华(5000)",
+      "url": "https://www.yanyue.cn/product/467"
+    },
+    {
+      "name": "中华(硬出口)",
+      "url": "https://www.yanyue.cn/product/1763"
+    },
+    {
+      "name": "中华(硬10mg12支)",
+      "url": "https://www.yanyue.cn/product/465"
+    },
+    {
+      "name": "中华(软)丙午马年贺岁版",
+      "url": "https://www.yanyue.cn/product/7315"
+    },
+    {
+      "name": "中华(听50支)",
+      "url": "https://www.yanyue.cn/product/3707"
+    },
+    {
+      "name": "中华(硬出口)香港版",
+      "url": "https://www.yanyue.cn/product/2342"
+    },
+    {
+      "name": "中华(硬10mg5支)",
+      "url": "https://www.yanyue.cn/product/445"
+    },
+    {
+      "name": "中华(硬10mg)",
+      "url": "https://www.yanyue.cn/product/440"
+    },
+    {
+      "name": "中华(硬)蛇年贺岁版",
+      "url": "https://www.yanyue.cn/product/6412"
+    },
+    {
+      "name": "中华(硬)龙年贺岁版",
+      "url": "https://www.yanyue.cn/product/6092"
+    },
+    {
+      "name": "中华(硬10mg出口)台湾版",
+      "url": "https://www.yanyue.cn/product/2717"
+    },
+    {
+      "name": "中华(硬5支)",
+      "url": "https://www.yanyue.cn/product/4232"
+    },
+    {
+      "name": "中华(硬12支)",
+      "url": "https://www.yanyue.cn/product/4113"
+    },
+    {
+      "name": "中华(软)龙年贺岁版",
+      "url": "https://www.yanyue.cn/product/5697"
+    },
+    {
+      "name": "中华(软)蛇年贺岁版",
+      "url": "https://www.yanyue.cn/product/6935"
+    },
+    {
+      "name": "中华(5000出口)",
+      "url": "https://www.yanyue.cn/product/1699"
+    },
+    {
+      "name": "中华(软)日版",
+      "url": "https://www.yanyue.cn/product/5886"
+    },
+    {
+      "name": "中华(华章)",
+      "url": "https://www.yanyue.cn/product/7746"
+    },
+    {
+      "name": "中华(软)专供出口香港版",
+      "url": "https://www.yanyue.cn/product/7168"
+    },
+    {
+      "name": "中华(硬)印尼出口版",
+      "url": "https://www.yanyue.cn/product/3967"
+    },
+    {
+      "name": "中华(硬)日版",
+      "url": "https://www.yanyue.cn/product/5854"
+    },
+    {
+      "name": "中华(硬10mg出口)英国版",
+      "url": "https://www.yanyue.cn/product/1411"
+    },
+    {
+      "name": "中华(硬出口2)",
+      "url": "https://www.yanyue.cn/product/1412"
+    },
+    {
+      "name": "中华(硬11mg12支旅游)",
+      "url": "https://www.yanyue.cn/product/444"
+    },
+    {
+      "name": "中华(硬11mg出口)",
+      "url": "https://www.yanyue.cn/product/1413"
+    },
+    {
+      "name": "Chunghwa (Thailand)",
+      "url": "https://www.yanyue.cn/product/5914"
+    },
+    {
+      "name": "中华(硬10mg出口)欧盟版",
+      "url": "https://www.yanyue.cn/product/3110"
+    },
+    {
+      "name": "中华(硬10mg出口)沙特阿拉伯",
+      "url": "https://www.yanyue.cn/product/2772"
+    },
+    {
+      "name": "中华(5000出口)印尼版",
+      "url": "https://www.yanyue.cn/product/7640"
+    },
+    {
+      "name": "中华(硬10mg出口)意大利版",
+      "url": "https://www.yanyue.cn/product/1618"
+    },
+    {
+      "name": "中华(硬出口)格鲁吉亚版",
+      "url": "https://www.yanyue.cn/product/3120"
+    },
+    {
+      "name": "中华(硬出口)韩国免税",
+      "url": "https://www.yanyue.cn/product/6565"
+    },
+    {
+      "name": "中华(5000出口)澳大利亚版",
+      "url": "https://www.yanyue.cn/product/6704"
+    },
+    {
+      "name": "中华(硬)哥斯达黎加出口版",
+      "url": "https://www.yanyue.cn/product/7392"
+    },
+    {
+      "name": "中华(硬)欧盟专供出口版",
+      "url": "https://www.yanyue.cn/product/3694"
+    },
+    {
+      "name": "中华(硬10mg出口)法国版",
+      "url": "https://www.yanyue.cn/product/2290"
+    },
+    {
+      "name": "中华(5000出口)欧盟版",
+      "url": "https://www.yanyue.cn/product/7685"
+    },
+    {
+      "name": "中华(硬10mg出口)荷兰",
+      "url": "https://www.yanyue.cn/product/5743"
+    }
+  ]
+}

@@ -5,7 +5,7 @@ import re
 from .dom import Node, Tree
 from .policy import ORIGIN, PolicyError, Pause, canonical_url, classify_document, utcnow
 
-TEXT_FIELDS = {"品牌": "brand_name", "类型": "type", "包装形式": "package_form", "主颜色": "primary_color", "副颜色": "secondary_color"}
+TEXT_FIELDS = {"品牌": "brand_name", "类型": "type", "包装形式": "package_form", "主颜色": "primary_color", "副颜色": "secondary_color", "烟支": "cigarette_format"}
 MEASUREMENTS = {
     "焦油": ("tar_mg", "mg"), "烟碱": ("nicotine_mg", "mg"), "一氧化碳": ("carbon_monoxide_mg", "mg"),
     "长度": ("length_mm", "mm"), "过滤嘴长": ("filter_length_mm", "mm"), "周长": ("circumference_mm", "mm"),
@@ -113,6 +113,23 @@ def parse_product(html: str, *, url: str, observed_at=None, access_method="offli
             pairs[label] = siblings[pos + 1]
     if "品牌" not in pairs or "类型" not in pairs:
         raise PolicyError("Basic facts do not match the reviewed product structure")
+    images = []
+    photo = first(root.walk(id="product_img"))
+    if photo:
+        for asset, _ in safe_links(photo, asset=True):
+            if "/genpic/" in asset:
+                continue
+            images.append({"source_asset_url": asset, "source_page_url": url, "purpose": "package_identification",
+                           "author_credit": None, "rights_status": "user_asserted_full_authorization", "rights_note": "User declared full authorization for relevant third-party images and original text; not independently verified per author.",
+                           "code_license_applies": False, "allow_derivatives": None, "publication_status": "quarantined_pending_review"})
+            break  # One neutral identification image, not a whole public gallery.
+    aliases = [n.text for n in heading.walk("span", cls="suming") if n.text]
+    return product_record(name=name_node.text, aliases=aliases, pairs=pairs, images=images, url=url, observed_at=observed_at, access_method=access_method)
+
+
+def product_record(*, name, aliases, pairs, images, url, observed_at, access_method):
+    """Common fact record construction; callers must validate their own input boundary."""
+    source_id = url.rsplit("/", 1)[1]
     fields = {name: evidence_field(label, pairs.get(label), observed_at, url) for label, name in TEXT_FIELDS.items()}
     measures = {name: evidence_field(label, pairs.get(label), observed_at, url, unit) for label, (name, unit) in MEASUREMENTS.items()}
     barcodes = []
@@ -126,18 +143,7 @@ def parse_product(html: str, *, url: str, observed_at=None, access_method="offli
             fact["verification_status"] = "needs_review"
         fact["kind"] = kind
         barcodes.append(fact)
-    images = []
-    photo = first(root.walk(id="product_img"))
-    if photo:
-        for asset, _ in safe_links(photo, asset=True):
-            if "/genpic/" in asset:
-                continue
-            images.append({"source_asset_url": asset, "source_page_url": url, "purpose": "package_identification",
-                           "author_credit": None, "rights_status": "user_asserted_full_authorization", "rights_note": "User declared full authorization for relevant third-party images and original text; not independently verified per author.",
-                           "code_license_applies": False, "allow_derivatives": None, "publication_status": "quarantined_pending_review"})
-            break  # One neutral identification image, not a whole public gallery.
-    aliases = [n.text for n in heading.walk("span", cls="suming") if n.text]
-    record = {"schema_version": "1.0", "id": "yanyue:" + source_id, "source_id": source_id, "name": name_node.text,
+    record = {"schema_version": "1.0", "id": "yanyue:" + source_id, "source_id": source_id, "name": name,
               "aliases": aliases, "category": "traditional_tobacco", "production_status": "unknown", "fields": fields,
               "measurements": measures, "barcodes": barcodes, "images": images, "source_url": url, "observed_at": observed_at,
               "source_access_method": access_method, "verification_status": "source_reported", "manufacturer_verified": False,

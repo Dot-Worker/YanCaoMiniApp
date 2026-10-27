@@ -1,0 +1,17 @@
+{
+  "data/checkpoint.schema.json": "58c79d9d4ceccf99608550b23382f6337d205c6049ccf22ce0024fd28f5fbd9e",
+  "data/product.schema.json": "d4320b82370f0f38a0c6078180b7733b328f82e9b6b50bc7d85aaf9b3d470ac0",
+  "tools/yanyue/__init__.py": "6e038b06f44268daebf31c88013494b49e0790341dcddebf19f9e4ed4d49eb4a",
+  "tools/yanyue/browser_gate.py": "8ddd0e46c978935ecc4db7af6528e9fed79aa13fa4fde757afd6ba3062aa3c4d",
+  "tools/yanyue/checkpoint.py": "8474111adfe1181d581489aeed69f54a4bea20b53b6ba75e0b1543eb3ae7b885",
+  "tools/yanyue/cli.py": "9ffce4adb625665a630a6b430b645f54b492c6fb24281cfbd1d62bb2f302bf0b",
+  "tools/yanyue/crawler.py": "c5d73555257dd95c45e7f916122e4f665b75ba14bcb25b1b34c88c8513c70657",
+  "tools/yanyue/dom.py": "1542f2530e88b2a1d3e3160160f3f7332d9afe6323992f8f8599aa87859367af",
+  "tools/yanyue/fetch.py": "017a66521e2816a739b428f6f9408f0e37a49c401a5a7cb72da4ba581dd745f2",
+  "tools/yanyue/parser.py": "60131bac3c5de05ab4c94829a9fa37f3a34a923a8aea34e5eec1b773de219042",
+  "tools/yanyue/policy.py": "b69b28733fa86fe905aa807df228d8a71119f778db3fcfdc7cb50157989667f1",
+  "tools/yanyue/robots.py": "810df02bf9dd0618a024d6b8063e46195b495b3c2de9aa6d63e6f2fa9b1ca9d9",
+  "tools/yanyue/schema.py": "88bf3bbb3e4248a1a248f99e44ad987c93a8a283d31358cd3de8d5f79f2396c1",
+  "tools/yanyue/snapshot_import.py": "1c80151517eef4512219f3f7f91bdf790989c25bcf2974cecefa595f17fa5953",
+  "tools/yanyue/store.py": "17cff0ea8667fd681b163b38e610d8e56101956f5cb2349abcd1bb57beb475c5"
+}

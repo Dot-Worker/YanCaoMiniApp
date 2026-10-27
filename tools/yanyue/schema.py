@@ -1,6 +1,8 @@
 """Strict schemas for a reviewable artifact boundary (never raw browser state)."""
 from pathlib import Path
 import math
+from datetime import datetime
+from urllib.parse import urlsplit
 import json
 from .policy import PolicyError, canonical_url
 
@@ -55,6 +57,26 @@ def validate_semantics(value, filename):
                 raise PolicyError("Image evidence has not passed the implemented manual-review import gate")
             if fact["source_url"] != expected_url:
                 raise PolicyError("Field evidence is attached to the wrong product")
+        if p["source_access_method"] == "imported_loaded_browser_field_snapshot":
+            provenance = p["snapshot_provenance"]
+            if provenance["source_host"] != urlsplit(expected_url).hostname:
+                raise PolicyError("Snapshot source host mismatch")
+            if provenance["source_time_precision"] != ("millisecond" if "." in p["observed_at"] else "second"):
+                raise PolicyError("Snapshot time precision mismatch")
+            try:
+                datetime.fromisoformat(p["observed_at"])
+                datetime.fromisoformat(provenance["imported_at"])
+            except ValueError:
+                raise PolicyError("Invalid snapshot observation date") from None
+            for fact in list(p["fields"].values()) + list(p["measurements"].values()) + p["barcodes"]:
+                if fact["observed_at"] != p["observed_at"]:
+                    raise PolicyError("Snapshot observation date mismatch")
+            for fact in list(p["measurements"].values()) + p["barcodes"]:
+                if fact["value"] is not None or fact["raw_value"] is not None or fact["raw_unit"] is not None:
+                    raise PolicyError("Snapshot numeric evidence has not been reviewed")
+                expected = ("needs_review", "image_not_read") if fact["evidence_urls"] else ("missing", "not_available")
+                if (fact["verification_status"], fact["extraction_method"]) != expected:
+                    raise PolicyError("Snapshot numeric review state mismatch")
         if p["original_text"] is not None:
             raise PolicyError("Original text awaits an observed scoped parser and review")
         for image in p["images"]:

@@ -100,7 +100,7 @@ class Store:
         self.db.execute("UPDATE queue SET attempts=attempts+1 WHERE url=?", (url,))
         self.db.commit()
 
-    def save_page(self, result):
+    def save_page(self, result, *, update_job=True):
         url = canonical_url(result["source_url"])
         body_hash = sha256(dump_json(result).encode()).hexdigest()
         url_hash = sha256(url.encode()).hexdigest()
@@ -129,7 +129,8 @@ class Store:
                     asset_url = canonical_url(asset["source_asset_url"], asset=True)
                     # One URL may evidence multiple fields; per-field linkage stays in product.
                     self.db.execute("INSERT OR IGNORE INTO assets(url,document) VALUES (?,?)", (asset_url, dump_json(asset)))
-            self.db.execute("UPDATE queue SET status='complete',error_code=NULL,observed_at=?,cache_path=?,source_content_sha256=?,observed_precision=? WHERE url=?", (result["observed_at"], relative, result.get("source_content_sha256"), result.get("source_time_precision", "second"), url))
+            if update_job:
+                self.db.execute("UPDATE queue SET status='complete',error_code=NULL,observed_at=?,cache_path=?,source_content_sha256=?,observed_precision=? WHERE url=?", (result["observed_at"], relative, result.get("source_content_sha256"), result.get("source_time_precision", "second"), url))
 
     def fail(self, url, code, *, pause=False):
         self.db.execute("UPDATE queue SET status=?,error_code=? WHERE url=?", ("paused" if pause else "failed", code, url))
