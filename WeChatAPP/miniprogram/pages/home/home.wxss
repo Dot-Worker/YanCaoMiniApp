@@ -1,0 +1,12 @@
+.hero { position:relative; padding:22rpx 0 16rpx; }
+.hero .title { font-size:60rpx; line-height:1.3; margin-bottom:24rpx; }
+.hero-label { position:absolute; right:0; top:36rpx; border:1rpx solid #bed0bf; border-radius:8rpx; padding:4rpx 12rpx; color:#4d6953; font-size:21rpx; }
+.search-arrow { float:right; }
+.progress-card .section-title { font-size:28rpx; margin:0; }
+.stats { display:flex; justify-content:space-between; margin:28rpx 0; }
+.stat-value { font-size:50rpx; color:#285b4b; font-weight:600; line-height:1.4; }
+.stat-label { color:#68766b; font-size:23rpx; }
+.progress-line { height:1rpx; background:#dde3da; margin:22rpx 0; }
+.brand-card { display:flex; width:100%; justify-content:space-between; align-items:center; text-align:left; padding:26rpx; margin:14rpx 0; border:1rpx solid #dce3d7; background:#fdfcf8; }
+.brand-name { font-size:34rpx; margin-bottom:6rpx; color:#2d4637; }
+.about { margin:20rpx auto 0; }

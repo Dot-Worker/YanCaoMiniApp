@@ -1,0 +1,24 @@
+{
+  "catalogSha256": "8ed413ea54eed9bb311b7a0d48c2801497a03f6a089ea28994bdfa972a9ed7d8",
+  "checkpointSha256": "7919b95519ae925f2c556bc2bc4a3ada4f26ede7571ec31428356750bafed517",
+  "imageReviewManifestSha256": "423946df3bc973d6d93349ded43ac95e2ef4ee6d9497a2f37cbd56e6f3c4c15e",
+  "scope": "frozen_82_product_local_preview",
+  "imageScope": "product610_only",
+  "networkCallsDuringExport": 0,
+  "privateAccountDataIncluded": false,
+  "originalImageBytesPreserved": true,
+  "noAutomaticSharedUrlPropagation": true,
+  "publicationReady": false,
+  "wechatDeveloperToolsRun": false,
+  "physicalDeviceRun": false,
+  "stats": {
+    "products": 82,
+    "brands": 522,
+    "brandsWithDetails": 2,
+    "indexedRelationships": 333,
+    "unreadIndexedRelationships": 251,
+    "productsWithImage": 1,
+    "localImages": 9,
+    "transcribedNumericFields": 6
+  }
+}

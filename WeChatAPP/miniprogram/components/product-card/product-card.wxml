@@ -1,0 +1,8 @@
+<button class="product" bindtap="select" aria-label="查看 {{product.name}} 的资料">
+  <view class="picture">
+    <image wx:if="{{product.imagePath && !imageFailed}}" class="image" src="{{product.imagePath}}" mode="aspectFit" binderror="imageError" />
+    <view wx:else class="placeholder"><text class="placeholder-mark">▤</text><text>{{imageFailed ? '图片无法显示' : '图片未采集'}}</text></view>
+  </view>
+  <view class="body"><view class="brand">{{product.brandLabel}}</view><view class="name">{{product.name}}</view><view class="meta">{{product.typeLabel}} · 来源记录</view><view class="date">采集 {{product.dateLabel}}</view></view>
+  <text class="arrow">›</text>
+</button>

@@ -101,16 +101,14 @@
               "enum": [
                 "source_reported",
                 "needs_review",
-                "missing",
-                "manually_read_image"
+                "missing"
               ]
             },
             "extraction_method": {
               "enum": [
                 "image_not_read",
                 "not_available",
-                "source_text",
-                "manual_image_review"
+                "source_text"
               ]
             }
           },
@@ -195,16 +193,14 @@
               "enum": [
                 "source_reported",
                 "needs_review",
-                "missing",
-                "manually_read_image"
+                "missing"
               ]
             },
             "extraction_method": {
               "enum": [
                 "image_not_read",
                 "not_available",
-                "source_text",
-                "manual_image_review"
+                "source_text"
               ]
             }
           },
@@ -289,16 +285,14 @@
               "enum": [
                 "source_reported",
                 "needs_review",
-                "missing",
-                "manually_read_image"
+                "missing"
               ]
             },
             "extraction_method": {
               "enum": [
                 "image_not_read",
                 "not_available",
-                "source_text",
-                "manual_image_review"
+                "source_text"
               ]
             }
           },
@@ -383,16 +377,14 @@
               "enum": [
                 "source_reported",
                 "needs_review",
-                "missing",
-                "manually_read_image"
+                "missing"
               ]
             },
             "extraction_method": {
               "enum": [
                 "image_not_read",
                 "not_available",
-                "source_text",
-                "manual_image_review"
+                "source_text"
               ]
             }
           },
@@ -477,16 +469,14 @@
               "enum": [
                 "source_reported",
                 "needs_review",
-                "missing",
-                "manually_read_image"
+                "missing"
               ]
             },
             "extraction_method": {
               "enum": [
                 "image_not_read",
                 "not_available",
-                "source_text",
-                "manual_image_review"
+                "source_text"
               ]
             }
           },
@@ -571,16 +561,14 @@
               "enum": [
                 "source_reported",
                 "needs_review",
-                "missing",
-                "manually_read_image"
+                "missing"
               ]
             },
             "extraction_method": {
               "enum": [
                 "image_not_read",
                 "not_available",
-                "source_text",
-                "manual_image_review"
+                "source_text"
               ]
             }
           },
@@ -690,6 +678,76 @@
                 "source_text",
                 "manual_image_review"
               ]
+            },
+            "image_review": {
+              "type": "object",
+              "properties": {
+                "profile_id": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "manifest_sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "reviewed_at": {
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "review_method": {
+                  "type": "string",
+                  "maxLength": 128
+                },
+                "source_quality": {
+                  "const": "source_reported_not_manufacturer_verified"
+                },
+                "candidate": {
+                  "type": "object",
+                  "minProperties": 1,
+                  "maxProperties": 32,
+                  "propertyNames": {
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "number",
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "properties": {
+                    "barcode_quality": {
+                      "type": "object",
+                      "minProperties": 1,
+                      "maxProperties": 12,
+                      "propertyNames": {
+                        "type": "string",
+                        "maxLength": 80
+                      },
+                      "additionalProperties": {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean",
+                          "null"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "profile_id",
+                "manifest_sha256",
+                "reviewed_at",
+                "review_method",
+                "source_quality",
+                "candidate"
+              ],
+              "additionalProperties": false,
+              "$comment": "Exact approved values and the full private provenance canonical SHA256 are checked by yanyue.schema.validate, per field slot, against the hash-pinned public policy. JSON Schema alone is not a full semantic validator."
             }
           },
           "required": [
@@ -785,6 +843,76 @@
                 "source_text",
                 "manual_image_review"
               ]
+            },
+            "image_review": {
+              "type": "object",
+              "properties": {
+                "profile_id": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "manifest_sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "reviewed_at": {
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "review_method": {
+                  "type": "string",
+                  "maxLength": 128
+                },
+                "source_quality": {
+                  "const": "source_reported_not_manufacturer_verified"
+                },
+                "candidate": {
+                  "type": "object",
+                  "minProperties": 1,
+                  "maxProperties": 32,
+                  "propertyNames": {
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "number",
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "properties": {
+                    "barcode_quality": {
+                      "type": "object",
+                      "minProperties": 1,
+                      "maxProperties": 12,
+                      "propertyNames": {
+                        "type": "string",
+                        "maxLength": 80
+                      },
+                      "additionalProperties": {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean",
+                          "null"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "profile_id",
+                "manifest_sha256",
+                "reviewed_at",
+                "review_method",
+                "source_quality",
+                "candidate"
+              ],
+              "additionalProperties": false,
+              "$comment": "Exact approved values and the full private provenance canonical SHA256 are checked by yanyue.schema.validate, per field slot, against the hash-pinned public policy. JSON Schema alone is not a full semantic validator."
             }
           },
           "required": [
@@ -880,6 +1008,76 @@
                 "source_text",
                 "manual_image_review"
               ]
+            },
+            "image_review": {
+              "type": "object",
+              "properties": {
+                "profile_id": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "manifest_sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "reviewed_at": {
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "review_method": {
+                  "type": "string",
+                  "maxLength": 128
+                },
+                "source_quality": {
+                  "const": "source_reported_not_manufacturer_verified"
+                },
+                "candidate": {
+                  "type": "object",
+                  "minProperties": 1,
+                  "maxProperties": 32,
+                  "propertyNames": {
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "number",
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "properties": {
+                    "barcode_quality": {
+                      "type": "object",
+                      "minProperties": 1,
+                      "maxProperties": 12,
+                      "propertyNames": {
+                        "type": "string",
+                        "maxLength": 80
+                      },
+                      "additionalProperties": {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean",
+                          "null"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "profile_id",
+                "manifest_sha256",
+                "reviewed_at",
+                "review_method",
+                "source_quality",
+                "candidate"
+              ],
+              "additionalProperties": false,
+              "$comment": "Exact approved values and the full private provenance canonical SHA256 are checked by yanyue.schema.validate, per field slot, against the hash-pinned public policy. JSON Schema alone is not a full semantic validator."
             }
           },
           "required": [
@@ -975,6 +1173,76 @@
                 "source_text",
                 "manual_image_review"
               ]
+            },
+            "image_review": {
+              "type": "object",
+              "properties": {
+                "profile_id": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "manifest_sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "reviewed_at": {
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "review_method": {
+                  "type": "string",
+                  "maxLength": 128
+                },
+                "source_quality": {
+                  "const": "source_reported_not_manufacturer_verified"
+                },
+                "candidate": {
+                  "type": "object",
+                  "minProperties": 1,
+                  "maxProperties": 32,
+                  "propertyNames": {
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "number",
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "properties": {
+                    "barcode_quality": {
+                      "type": "object",
+                      "minProperties": 1,
+                      "maxProperties": 12,
+                      "propertyNames": {
+                        "type": "string",
+                        "maxLength": 80
+                      },
+                      "additionalProperties": {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean",
+                          "null"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "profile_id",
+                "manifest_sha256",
+                "reviewed_at",
+                "review_method",
+                "source_quality",
+                "candidate"
+              ],
+              "additionalProperties": false,
+              "$comment": "Exact approved values and the full private provenance canonical SHA256 are checked by yanyue.schema.validate, per field slot, against the hash-pinned public policy. JSON Schema alone is not a full semantic validator."
             }
           },
           "required": [
@@ -1260,6 +1528,76 @@
                 "source_text",
                 "manual_image_review"
               ]
+            },
+            "image_review": {
+              "type": "object",
+              "properties": {
+                "profile_id": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "manifest_sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "reviewed_at": {
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "review_method": {
+                  "type": "string",
+                  "maxLength": 128
+                },
+                "source_quality": {
+                  "const": "source_reported_not_manufacturer_verified"
+                },
+                "candidate": {
+                  "type": "object",
+                  "minProperties": 1,
+                  "maxProperties": 32,
+                  "propertyNames": {
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "number",
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "properties": {
+                    "barcode_quality": {
+                      "type": "object",
+                      "minProperties": 1,
+                      "maxProperties": 12,
+                      "propertyNames": {
+                        "type": "string",
+                        "maxLength": 80
+                      },
+                      "additionalProperties": {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean",
+                          "null"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "profile_id",
+                "manifest_sha256",
+                "reviewed_at",
+                "review_method",
+                "source_quality",
+                "candidate"
+              ],
+              "additionalProperties": false,
+              "$comment": "Exact approved values and the full private provenance canonical SHA256 are checked by yanyue.schema.validate, per field slot, against the hash-pinned public policy. JSON Schema alone is not a full semantic validator."
             }
           },
           "required": [
@@ -1355,6 +1693,76 @@
                 "source_text",
                 "manual_image_review"
               ]
+            },
+            "image_review": {
+              "type": "object",
+              "properties": {
+                "profile_id": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "manifest_sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "reviewed_at": {
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "review_method": {
+                  "type": "string",
+                  "maxLength": 128
+                },
+                "source_quality": {
+                  "const": "source_reported_not_manufacturer_verified"
+                },
+                "candidate": {
+                  "type": "object",
+                  "minProperties": 1,
+                  "maxProperties": 32,
+                  "propertyNames": {
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "number",
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "properties": {
+                    "barcode_quality": {
+                      "type": "object",
+                      "minProperties": 1,
+                      "maxProperties": 12,
+                      "propertyNames": {
+                        "type": "string",
+                        "maxLength": 80
+                      },
+                      "additionalProperties": {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean",
+                          "null"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "profile_id",
+                "manifest_sha256",
+                "reviewed_at",
+                "review_method",
+                "source_quality",
+                "candidate"
+              ],
+              "additionalProperties": false,
+              "$comment": "Exact approved values and the full private provenance canonical SHA256 are checked by yanyue.schema.validate, per field slot, against the hash-pinned public policy. JSON Schema alone is not a full semantic validator."
             }
           },
           "required": [
@@ -1470,6 +1878,76 @@
               "pack",
               "carton"
             ]
+          },
+          "image_review": {
+            "type": "object",
+            "properties": {
+              "profile_id": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "manifest_sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "reviewed_at": {
+                "type": "string",
+                "maxLength": 40
+              },
+              "review_method": {
+                "type": "string",
+                "maxLength": 128
+              },
+              "source_quality": {
+                "const": "source_reported_not_manufacturer_verified"
+              },
+              "candidate": {
+                "type": "object",
+                "minProperties": 1,
+                "maxProperties": 32,
+                "propertyNames": {
+                  "type": "string",
+                  "maxLength": 80
+                },
+                "additionalProperties": {
+                  "type": [
+                    "string",
+                    "number",
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "properties": {
+                  "barcode_quality": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "maxProperties": 12,
+                    "propertyNames": {
+                      "type": "string",
+                      "maxLength": 80
+                    },
+                    "additionalProperties": {
+                      "type": [
+                        "string",
+                        "number",
+                        "boolean",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "required": [
+              "profile_id",
+              "manifest_sha256",
+              "reviewed_at",
+              "review_method",
+              "source_quality",
+              "candidate"
+            ],
+            "additionalProperties": false,
+            "$comment": "Exact approved values and the full private provenance canonical SHA256 are checked by yanyue.schema.validate, per field slot, against the hash-pinned public policy. JSON Schema alone is not a full semantic validator."
           }
         },
         "required": [
@@ -1487,7 +1965,21 @@
         ],
         "additionalProperties": false
       },
-      "maxItems": 2
+      "maxItems": 3,
+      "allOf": [
+        {
+          "if": {
+            "minItems": 3
+          },
+          "then": {
+            "items": {
+              "required": [
+                "image_review"
+              ]
+            }
+          }
+        }
+      ]
     },
     "images": {
       "type": "array",

@@ -1,0 +1,8 @@
+{
+  "description": "烟草资料百科 · 仅本地数据预览，不上传或发布",
+  "projectname": "YanCaoMiniApp-local-preview",
+  "miniprogramRoot": "miniprogram/",
+  "compileType": "miniprogram",
+  "appid": "touristappid",
+  "setting": { "es6": true, "minified": false, "urlCheck": true }
+}

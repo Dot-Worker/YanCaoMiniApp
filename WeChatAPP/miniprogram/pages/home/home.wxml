@@ -1,0 +1,17 @@
+<view class="page">
+  <view class="eyebrow">YANCAO / 资料索引</view>
+  <view class="hero"><view class="title"><view>认识资料，</view><view>不作推荐。</view></view><view class="subtitle"><view>公开百科资料的离线整理</view><view>保留来源，也保留未知。</view></view><view class="hero-label">本地预览版</view></view>
+  <button class="search-entry" bindtap="openSearch">⌕　搜索名称、品牌或已核验条码 <text class="search-arrow">→</text></button>
+  <view class="small muted">只检索已收录的 {{stats.products}} 条详情，不代表全站。</view>
+  <view class="section card progress-card">
+    <view class="row"><view class="section-title">这份资料库，正在建立</view><text class="badge">部分收录</text></view>
+    <view class="stats"><view><view class="stat-value">{{stats.products}}</view><view class="stat-label">已收录详情</view></view><view><view class="stat-value">{{stats.brands}}</view><view class="stat-label">已见品牌</view></view><view><view class="stat-value">{{stats.productsWithImage}}</view><view class="stat-label">含本地实图</view></view></view>
+    <view class="progress-line"></view><view class="small muted">已见 {{stats.indexedRelationships}} 条品牌—产品索引，其中 {{stats.unreadIndexedRelationships}} 条尚未读取详情；其余品牌的产品总量未知。</view>
+    <view class="note">快照日期 {{snapshotDate}} · 不自动联网更新</view>
+  </view>
+  <view class="section"><view class="section-top"><view class="section-title">已有资料的品牌</view><button class="text-button" bindtap="openBrands">全部目录 →</button></view>
+    <button wx:for="{{availableBrands}}" wx:key="id" class="brand-card" data-id="{{item.id}}" bindtap="openBrand"><view><view class="brand-name">{{item.name}}</view><view class="small muted">{{item.availableCount}} 条已收录 · 非完整品牌库</view></view><text>→</text></button>
+  </view>
+  <view class="health"><view>吸烟有害健康</view><view>低焦油不代表低危害。资料仅用于识别与科普，不构成购买或使用建议。</view></view>
+  <button class="text-button about" bindtap="openAbout">来源、字段状态与使用说明 →</button>
+</view>

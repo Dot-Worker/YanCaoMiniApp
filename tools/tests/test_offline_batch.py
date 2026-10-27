@@ -158,7 +158,9 @@ class BatchTests(unittest.TestCase):
         import yanyue.snapshot_import
         self.assertEqual(Path(yanyue.snapshot_import.__file__).resolve(),expected_root/'tools/yanyue/snapshot_import.py')
         pins=json.loads((batch.HERE/'ADAPTER_SHA256.json').read_text())
-        self.assertEqual(len(pins),15)
+        self.assertEqual(len(pins),21)
+        self.assertIn("tools/yanyue/reviewed_images.py",pins)
+        self.assertIn("data/reviewed-image-profile-product610.json",pins)
         for relative,digest in pins.items():
             self.assertEqual(sha256((expected_root/relative).read_bytes()).hexdigest(),digest)
 

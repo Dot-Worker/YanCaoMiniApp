@@ -1,0 +1,112 @@
+Native miniprogram preview v5 — WeChatAPP import-root relocation; local validation only
+Node: v24.22.1
+Python: Python 3.12.14
+
+=== Node unit and page-mock tests ===
+✔ frozen coverage is explicit and incomplete (1.048959ms)
+✔ directory relations, not substring guessing, supply exact brand membership (4.827858ms)
+✔ unobserved category, English name, and product total are not invented (0.39858ms)
+✔ Chinese brand search and availability filter (0.693915ms)
+✔ English brand lookup is case insensitive without invented translation (0.375035ms)
+✔ English product lookup, tokenized whitespace, and brand association (2.076776ms)
+✔ empty result, whitespace query, and clear are distinct and safe (2.512673ms)
+✔ zero is a numeric value, never missing (0.449246ms)
+✔ null, absent, and needs-review fields cannot become zero or fabricated values (0.22607ms)
+✔ unit inferred from field context is visibly differentiated (0.394303ms)
+✔ multiple barcode records retain both source pack variants (0.615666ms)
+✔ missing image has no network fallback and does not hide product text (0.29253ms)
+✔ unknown product IDs yield no fabricated detail (0.142224ms)
+✔ pagination covers exact boundaries without duplicate records (0.460844ms)
+✔ no numeric values propagated across 81 other products (0.441184ms)
+✔ image-enabled snapshot retains exact 610 readings and all three barcodes (2.036416ms)
+✔ route URLs validate IDs and avoid accidental external navigation (1.605462ms)
+✔ double taps cannot stack repeated page opens before onShow (0.299721ms)
+✔ failed navigation unlocks retry and reports failure (0.350407ms)
+✔ back uses native history, with home fallback for direct entry (0.268344ms)
+✔ brand page searches, toggles available filter, clears, and paginates all 522 (21.184744ms)
+✔ product page search/clear/brand context is preserved on returning from detail (4.671924ms)
+✔ unknown brand does not silently display the entire database (1.564585ms)
+✔ known uncollected brand shows empty detail, not zero known products (0.510679ms)
+✔ search history selection is repeatable, clear restores empty state (3.170653ms)
+✔ search remains functional when local persistence fails (2.532682ms)
+✔ favorite state refreshes when returning to detail and saved tab (1.430303ms)
+✔ favorite write failure does not display a false saved success (0.395125ms)
+✔ saved tab read failure is visible and retry can recover (0.490518ms)
+✔ invalid detail, image failure, and evidence disclosure have safe fallbacks (0.700325ms)
+✔ product card error handling never installs a remote placeholder (0.379581ms)
+✔ favorite IDs are validated, deduplicated and restricted to available records (2.111178ms)
+✔ favorites toggle twice restores prior state (0.484179ms)
+✔ favorites do not accept nonexistent or malformed IDs (0.532011ms)
+✔ storage read exception never overwrites an unread existing favorite store (0.370397ms)
+✔ write exception is exposed and original store remains unchanged (0.271188ms)
+✔ corrupt persisted data is treated safely, never executed (0.459221ms)
+✔ history is trimmed, case-insensitively deduplicated and capped at six (0.519512ms)
+✔ empty history submissions do not clear or add entries (0.354644ms)
+✔ history clear persists empty state, failure remains visible (0.28584ms)
+✔ history read failure cannot be mistaken for successful save (0.321774ms)
+✔ long history is bounded and malformed numeric input ignored (0.273321ms)
+ℹ tests 42
+ℹ suites 0
+ℹ pass 42
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 238.644961
+
+=== Python exporter helper and strict review-binding tests ===
+test_null_raw_unit_and_context_unit_are_not_merged (test_export.ExportHelpers.test_null_raw_unit_and_context_unit_are_not_merged) ... ok
+test_private_review_is_projected_to_minimal_machine_provenance (test_export.ExportHelpers.test_private_review_is_projected_to_minimal_machine_provenance) ... ok
+test_read_pinned_accepts_exact_bytes (test_export.ExportHelpers.test_read_pinned_accepts_exact_bytes) ... ok
+test_read_pinned_rejects_modified_input (test_export.ExportHelpers.test_read_pinned_rejects_modified_input) ... ok
+test_shared_url_does_not_attach_another_product_image (test_export.ExportHelpers.test_shared_url_does_not_attach_another_product_image) ... ok
+test_validation_is_not_removed_by_optimized_python (test_export.ExportHelpers.test_validation_is_not_removed_by_optimized_python) ... ok
+test_whitelist_omits_unrequested_fields (test_export.ExportHelpers.test_whitelist_omits_unrequested_fields) ... ok
+test_zero_is_preserved (test_export.ExportHelpers.test_zero_is_preserved) ... ok
+test_barcode_kind_and_variant_order_cannot_be_rewritten (test_export.ReviewBinding.test_barcode_kind_and_variant_order_cannot_be_rewritten) ... ok
+test_exact_reconstruction_is_accepted (test_export.ReviewBinding.test_exact_reconstruction_is_accepted) ... ok
+test_missing_reviewed_value_is_rejected (test_export.ReviewBinding.test_missing_reviewed_value_is_rejected) ... ok
+test_numeric_boolean_type_change_is_rejected (test_export.ReviewBinding.test_numeric_boolean_type_change_is_rejected) ... ok
+test_review_metadata_is_not_arbitrary (test_export.ReviewBinding.test_review_metadata_is_not_arbitrary) ... ok
+test_reviewed_field_cannot_acquire_extra_unapproved_data (test_export.ReviewBinding.test_reviewed_field_cannot_acquire_extra_unapproved_data) ... ok
+test_swapped_complete_measurement_objects_are_rejected (test_export.ReviewBinding.test_swapped_complete_measurement_objects_are_rejected) ... ok
+test_target_key_is_bound_before_reconstruction (test_export.ReviewBinding.test_target_key_is_bound_before_reconstruction) ... ok
+test_text_image_and_identity_changes_are_rejected (test_export.ReviewBinding.test_text_image_and_identity_changes_are_rejected) ... ok
+test_unapproved_null_field_cannot_be_relabelled (test_export.ReviewBinding.test_unapproved_null_field_cannot_be_relabelled) ... ok
+test_unknown_measurement_key_is_rejected (test_export.ReviewBinding.test_unknown_measurement_key_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.008s
+
+OK
+
+=== Offline structural, exact asset and static contrast checks ===
+{
+  "status": "PASS",
+  "structuralAssertions": 43726,
+  "registeredPages": 6,
+  "wxmlFiles": 7,
+  "javascriptFiles": 12,
+  "reviewedAssets": 9,
+  "packagedBytes": 924569,
+  "runtimeApis": [
+    "getStorageSync",
+    "navigateBack",
+    "navigateTo",
+    "setStorageSync",
+    "showToast",
+    "switchTab"
+  ],
+  "normalTextContrastRatios": [
+    5.698,
+    5.89,
+    5.135,
+    4.665,
+    4.636,
+    4.665
+  ],
+  "wechatCompilerExecuted": false,
+  "developerToolsExecuted": false,
+  "physicalDeviceExecuted": false,
+  "htmlMockScreenshotUsedAsDeviceEvidence": false
+}

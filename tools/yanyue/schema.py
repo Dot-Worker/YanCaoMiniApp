@@ -49,11 +49,18 @@ def check_urls(value):
 def validate_semantics(value, filename):
     products = [value] if filename == "product.schema.json" else value.get("products", [])
     for p in products:
+        from .reviewed_images import has_review, validate_reviewed_product
+        reviewed = has_review(p)
+        if reviewed:
+            validate_reviewed_product(p)
         expected_url = "https://www.yanyue.cn/product/" + p["source_id"]
         if p["id"] != "yanyue:" + p["source_id"] or p["source_url"] != expected_url:
             raise PolicyError("Product identity mismatch")
         for fact in list(p["fields"].values()) + list(p["measurements"].values()) + p["barcodes"]:
-            if fact["evidence_urls"] and fact["value"] is not None:
+            manual = fact["verification_status"] == "manually_read_image" or fact["extraction_method"] == "manual_image_review"
+            if manual != ("image_review" in fact):
+                raise PolicyError("Manual image status requires approved per-field evidence")
+            if fact["evidence_urls"] and fact["value"] is not None and "image_review" not in fact:
                 raise PolicyError("Image evidence has not passed the implemented manual-review import gate")
             if fact["source_url"] != expected_url:
                 raise PolicyError("Field evidence is attached to the wrong product")
@@ -72,6 +79,8 @@ def validate_semantics(value, filename):
                 if fact["observed_at"] != p["observed_at"]:
                     raise PolicyError("Snapshot observation date mismatch")
             for fact in list(p["measurements"].values()) + p["barcodes"]:
+                if "image_review" in fact:
+                    continue
                 if fact["value"] is not None or fact["raw_value"] is not None or fact["raw_unit"] is not None:
                     raise PolicyError("Snapshot numeric evidence has not been reviewed")
                 expected = ("needs_review", "image_not_read") if fact["evidence_urls"] else ("missing", "not_available")
@@ -84,6 +93,8 @@ def validate_semantics(value, filename):
                 raise PolicyError("Image evidence is attached to the wrong product")
     if filename != "checkpoint.schema.json":
         return
+    from .catalog import catalog_edges
+    catalog_edges(value)  # Preserve exact catalog evidence bindings.
     product_urls = {p["source_url"] for p in products}
     if len(product_urls) != len(products):
         raise PolicyError("Duplicate product identities")

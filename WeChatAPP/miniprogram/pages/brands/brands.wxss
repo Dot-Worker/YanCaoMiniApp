@@ -1,0 +1,5 @@
+.filter { padding:8rpx 0 22rpx; }
+.results-label { margin:0 0 20rpx; }
+.brand-row { display:flex; align-items:center; width:100%; text-align:left; padding:26rpx; margin:0 0 14rpx; border:1rpx solid #dce3d8; background:#fdfcf8; }
+.name { font-size:31rpx; margin-bottom:4rpx; word-break:break-all; overflow-wrap:break-word; }
+.chevron { padding-left:20rpx; font-size:38rpx; color:#718173; }

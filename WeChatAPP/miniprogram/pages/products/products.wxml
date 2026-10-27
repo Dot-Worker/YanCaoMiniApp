@@ -1,0 +1,11 @@
+<view class="page">
+  <view class="eyebrow">SEARCH / 详情资料</view><view class="title">{{brandName}}</view><view class="subtitle">只展示本地已收录记录 · 来源非厂家认证</view>
+  <view class="search"><input value="{{query}}" bindinput="onInput" bindconfirm="search" placeholder="名称、品牌、已核验条码" maxlength="80" confirm-type="search" aria-label="搜索本地资料"/><button wx:if="{{query}}" bindtap="clearSearch">清空</button><button bindtap="search">搜索</button></view>
+  <view wx:if="{{storageError}}" class="warning">本地存储暂不可用，搜索不受影响；本次历史操作未确认保存。</view>
+  <view wx:if="{{!query && history.length > 0}}" class="history"><view class="row"><text class="small muted">本地搜索记录</text><button class="text-button" bindtap="clearHistory">清除记录</button></view><view class="chips"><button wx:for="{{history}}" wx:key="*this" class="chip" data-query="{{item}}" bindtap="useHistory">{{item}}</button></view></view>
+  <view class="section-top"><text class="small muted">{{total}} 条匹配 · 按来源名称排序</text><button wx:if="{{brandId}}" class="text-button" bindtap="showAll">查全部资料</button></view>
+  <view wx:if="{{total === 0}}" class="empty"><view class="empty-title">{{invalidBrand ? '品牌链接无效' : (query ? '没有匹配的已收录资料' : '这个品牌的详情尚未采集')}}</view><view class="muted">{{invalidBrand ? '此品牌编号不在当前目录中。' : '没有结果不代表该产品或品牌不存在。资料库仍在补充。'}}</view><button wx:if="{{query}}" bindtap="clearSearch">清空关键词</button><button wx:else bindtap="showAll">查看全部已收录资料</button></view>
+  <product-card wx:for="{{items}}" wx:key="id" product="{{item}}" bindselect="openProduct" />
+  <button wx:if="{{hasMore}}" class="text-button" bindtap="loadMore">继续显示资料</button><view wx:elif="{{total > 0}}" class="footer">已显示全部匹配资料</view>
+  <view class="health">吸烟有害健康。低焦油不代表低危害。</view>
+</view>

@@ -53,15 +53,11 @@ class Store:
 
     @contextmanager
     def exclusive(self):
-        lock = (self.root / "worker.lock").open("a+")
-        try:
-            try:
-                fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-            except BlockingIOError:
-                raise PolicyError("Another worker holds this state directory")
+        # Reuse the reviewed descriptor-anchored NOFOLLOW/single-link lock for
+        # every legacy and new local entrypoint; never follow worker.lock links.
+        from .reviewed_images import exclusive
+        with exclusive(self):
             yield
-        finally:
-            lock.close()
 
     def put_meta(self, key, value):
         self.db.execute("INSERT OR REPLACE INTO metadata VALUES (?,?)", (key, dump_json(value)))

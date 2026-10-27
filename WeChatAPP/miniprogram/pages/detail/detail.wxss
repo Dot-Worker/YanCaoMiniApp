@@ -1,0 +1,19 @@
+.detail-title { font-size:43rpx; margin:18rpx 0; word-break:break-all; overflow-wrap:break-word; }
+.photo-card { margin:26rpx 0 12rpx; border:1rpx solid #dce3d6; border-radius:24rpx; background:#fdfcf8; overflow:hidden; }
+.product-photo { width:100%; height:440rpx; display:block; }
+.photo-placeholder { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:320rpx; text-align:center; padding:30rpx; color:#637764; }
+.placeholder-mark { font-size:64rpx; color:#8c9c87; margin-bottom:18rpx; }
+.spec-card { padding:0 26rpx; }
+.spec-row { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1rpx solid #e5e8df; padding:24rpx 0; }
+.spec-row:last-child,.barcode-row:last-child { border-bottom:0; }
+.spec-label { flex-shrink:0; width:196rpx; padding:2rpx 16rpx 0 0; color:#647165; font-size:26rpx; }
+.spec-value { text-align:right; flex:1; min-width:0; font-size:30rpx; }
+.field-note { color:#58695c; font-size:21rpx; line-height:1.5; margin-top:5rpx; }
+.unknown { color:#59665a; font-size:27rpx; }
+.unit { font-size:24rpx; }
+.barcode-row { padding:24rpx 0; border-bottom:1rpx solid #e5e8df; }
+.barcode-value { display:block; font-family:monospace; font-size:36rpx; letter-spacing:2rpx; margin-top:7rpx; word-break:break-all; }
+.source-line { word-break:break-all; overflow-wrap:break-word; display:block; font-size:25rpx; margin-bottom:12rpx; }
+.evidence-toggle { width:100%; margin-bottom:16rpx; background:#e9efe5; text-align:left; }
+.evidence-row { border-top:1rpx solid #e4e8df; margin-top:22rpx; padding-top:20rpx; }
+.evidence-row image { max-width:100%; margin-top:12rpx; display:block; }

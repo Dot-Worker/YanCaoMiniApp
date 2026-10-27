@@ -1,0 +1,53 @@
+{
+  "source_url": "https://www.yanyue.cn/product/5914",
+  "product_name": "Chunghwa (Thailand)",
+  "observed_at": "2026-10-27T05:45:28.973Z",
+  "snapshot": {
+    "fields": [
+      {
+        "images": [],
+        "label": "品牌:",
+        "text": "中华"
+      },
+      {
+        "images": [],
+        "label": "类型:",
+        "text": "烤烟型"
+      },
+      {
+        "images": [
+          "https://res.yanyue.cn/thumb/genpic/5bb/ded/5bbded2b064913e77ebf7e7b9ffea5ce.png"
+        ],
+        "label": "长度:",
+        "text": ""
+      },
+      {
+        "images": [],
+        "label": "包装形式:",
+        "text": "纸质硬盒"
+      },
+      {
+        "images": [
+          "https://res.yanyue.cn/thumb/genpic/657/bd6/657bd60d1726ca788550516b7507a728.png"
+        ],
+        "label": "每盒数量:",
+        "text": ""
+      },
+      {
+        "images": [
+          "https://res.yanyue.cn/thumb/genpic/d04/dab/d04dabc2491d2fb911e65f4b14b3007e.png"
+        ],
+        "label": "条装盒数:",
+        "text": ""
+      },
+      {
+        "images": [
+          "https://res.yanyue.cn/thumb/genpic/d69/398/d69398e47207238dafacbed1f765c38f.png"
+        ],
+        "label": "小盒条码:",
+        "text": ""
+      }
+    ],
+    "photo": "https://res.yanyue.cn/thumb/400x300/876/5dd/8765dde0657199037c274fc087786103.jpg"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "pages": ["pages/home/home", "pages/brands/brands", "pages/saved/saved", "pages/products/products", "pages/detail/detail", "pages/about/about"],
+  "window": { "navigationBarTitleText": "烟草资料百科", "navigationBarBackgroundColor": "#F6F5F0", "navigationBarTextStyle": "black", "backgroundColor": "#F6F5F0", "backgroundTextStyle": "dark" },
+  "tabBar": { "color": "#68716A", "selectedColor": "#285B4B", "backgroundColor": "#FDFCF8", "borderStyle": "white", "list": [{"pagePath":"pages/home/home","text":"资料首页"},{"pagePath":"pages/brands/brands","text":"品牌目录"},{"pagePath":"pages/saved/saved","text":"本地收藏"}] },
+  "sitemapLocation": "sitemap.json"
+}

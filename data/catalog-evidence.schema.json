@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "catalog_evidence_v1"
+    },
+    "current_source_groups_status": {
+      "const": "not_collected_in_current_flat_directory"
+    },
+    "documents": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "maxLength": 100,
+            "pattern": "^(directory|brand-index:[1-9][0-9]*|listing-page:[1-9][0-9]*:[1-9][0-9]*)$"
+          },
+          "format": {
+            "enum": [
+              "brand_directory",
+              "brand_index",
+              "listing_page"
+            ]
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "raw_json": {
+            "type": "string",
+            "maxLength": 131072
+          }
+        },
+        "required": [
+          "key",
+          "format",
+          "sha256",
+          "raw_json"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "current_source_groups_status",
+    "documents"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "exactActual610Accepted": true,
+  "actualDataMutationsRejected": {
+    "swap_complete_length_and_stick_count": "REJECTED",
+    "remove_reviewed_length": "REJECTED",
+    "fake_review_on_unapproved_null": "REJECTED",
+    "alter_nonreviewed_text": "REJECTED",
+    "alter_image_status": "REJECTED",
+    "alter_barcode_kind": "REJECTED",
+    "reorder_pack_variants": "REJECTED",
+    "boolean_as_number": "REJECTED",
+    "alter_review_metadata": "REJECTED"
+  },
+  "sourceCheckpointSha256": "7919b95519ae925f2c556bc2bc4a3ada4f26ede7571ec31428356750bafed517",
+  "imageManifestSha256": "423946df3bc973d6d93349ded43ac95e2ef4ee6d9497a2f37cbd56e6f3c4c15e",
+  "sourceFilesModified": false,
+  "networkCalls": 0
+}
